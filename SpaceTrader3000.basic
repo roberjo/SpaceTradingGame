@@ -4,6 +4,7 @@ REM *     A Complex BASIC Program         *
 REM ****************************************
 
 CLS
+RANDOMIZE TIMER
 PRINT TAB(20) "╔════════════════════════════╗"
 PRINT TAB(20) "║    SPACE TRADER 3000       ║"
 PRINT TAB(20) "║     Version 1.0            ║"
@@ -12,6 +13,7 @@ PRINT TAB(20) "╚════════════════════�
 REM Initialize variables
 DIM PLANETS$(10), GOODS$(8), PRICES(8,10)
 DIM INVENTORY(8), CREDITS, FUEL
+DIM CURRENT.PLANET
 
 REM Setup planet names
 PLANETS$(1) = "Earth"
@@ -97,6 +99,14 @@ SUB TRAVEL
             PRINT "Not enough fuel!"
         END IF
     END IF
+END SUB
+
+SUB BUYMENU
+    PRINT "Buy Menu: Not yet implemented."
+END SUB
+
+SUB SELLMENU
+    PRINT "Sell Menu: Not yet implemented."
 END SUB
 
 MAIN:

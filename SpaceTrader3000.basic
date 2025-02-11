@@ -1,0 +1,114 @@
+REM ****************************************
+REM *     SPACE TRADING ADVENTURE         *
+REM *     A Complex BASIC Program         *
+REM ****************************************
+
+CLS
+PRINT TAB(20) "╔════════════════════════════╗"
+PRINT TAB(20) "║    SPACE TRADER 3000       ║"
+PRINT TAB(20) "║     Version 1.0            ║"
+PRINT TAB(20) "╚════════════════════════════╝"
+
+REM Initialize variables
+DIM PLANETS$(10), GOODS$(8), PRICES(8,10)
+DIM INVENTORY(8), CREDITS, FUEL
+
+REM Setup planet names
+PLANETS$(1) = "Earth"
+PLANETS$(2) = "Mars"
+PLANETS$(3) = "Venus"
+PLANETS$(4) = "Jupiter"
+PLANETS$(5) = "Saturn"
+
+REM Setup tradeable goods
+GOODS$(1) = "Water"
+GOODS$(2) = "Food"
+GOODS$(3) = "Minerals"
+GOODS$(4) = "Technology"
+GOODS$(5) = "Medical"
+
+REM Initialize player stats
+CREDITS = 1000
+FUEL = 100
+CURRENT.PLANET = 1
+
+SUB DISPLAYSTATUS
+    PRINT "╔════════════════════════════════════╗"
+    PRINT "║           STATUS REPORT            ║"
+    PRINT "╟────────────────────────────────────╢"
+    PRINT "║ Location: "; PLANETS$(CURRENT.PLANET);
+    PRINT TAB(38); "║"
+    PRINT "║ Credits:  "; CREDITS;
+    PRINT TAB(38); "║"
+    PRINT "║ Fuel:     "; FUEL; "%";
+    PRINT TAB(38); "║"
+    PRINT "╚════════════════════════════════════╝"
+END SUB
+
+SUB MARKETMENU
+    PRINT "Available Commands:"
+    PRINT "1. Buy Goods"
+    PRINT "2. Sell Goods"
+    PRINT "3. View Prices"
+    PRINT "4. Travel"
+    PRINT "5. Quit"
+    
+    INPUT "Enter command (1-5): ", CMD
+    
+    SELECT CASE CMD
+        CASE 1: GOSUB BUYMENU
+        CASE 2: GOSUB SELLMENU
+        CASE 3: GOSUB SHOWPRICES
+        CASE 4: GOSUB TRAVEL
+        CASE 5: GOTO ENDGAME
+    END SELECT
+END SUB
+
+SUB SHOWPRICES
+    PRINT "╔═══════════════════════════════╗"
+    PRINT "║      CURRENT MARKET PRICES    ║"
+    PRINT "╠═══════════╦═══════════════════╣"
+    FOR I = 1 TO 5
+        PRICE = INT(RND * 100) + 50
+        PRINT "║ "; GOODS$(I); TAB(12); "║ $"; PRICE; TAB(33); "║"
+    NEXT I
+    PRINT "╚═══════════╩═══════════════════╝"
+END SUB
+
+SUB TRAVEL
+    PRINT "Available Destinations:"
+    FOR I = 1 TO 5
+        IF I <> CURRENT.PLANET THEN
+            PRINT I; ". "; PLANETS$(I)
+        END IF
+    NEXT I
+    
+    INPUT "Select destination (0 to cancel): ", DEST
+    IF DEST > 0 AND DEST <= 5 AND DEST <> CURRENT.PLANET THEN
+        IF FUEL >= 20 THEN
+            FUEL = FUEL - 20
+            CURRENT.PLANET = DEST
+            PRINT "Traveling to "; PLANETS$(DEST); "..."
+            FOR I = 1 TO 3
+                PRINT STRING$(I, ".")
+                REM Add delay here in real implementation
+            NEXT I
+        ELSE
+            PRINT "Not enough fuel!"
+        END IF
+    END IF
+END SUB
+
+MAIN:
+    DO
+        CALL DISPLAYSTATUS
+        CALL MARKETMENU
+    LOOP
+
+ENDGAME:
+    PRINT "╔════════════════════════════╗"
+    PRINT "║      GAME OVER             ║"
+    PRINT "║  Final Credits: "; CREDITS;
+    PRINT TAB(31); "║"
+    PRINT "╚════════════════════════════╝"
+END
